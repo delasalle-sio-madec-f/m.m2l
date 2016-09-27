@@ -1,9 +1,9 @@
 <?php
 // Projet Réservations M2L - version web mobile
-// fichier : 
-// Rôle : 
-// Création : 
-// Mise à jour : 
+// fichier : Classe Salle
+// Rôle : la classe Salle représente les sales
+// Création : 27/09/16 Par Florian
+// Mise à jour : Pas de MAJ
 
 class Reservation
 {
