@@ -5,7 +5,19 @@
 // Création : 
 // Mise à jour : 
 
+class Reservation
+{
+// ------------------------------------------------------------------------------------------------------
+// ---------------------------------- Membres privés de la classe ---------------------------------------
+// ------------------------------------------------------------------------------------------------------
 
+
+private $id;			// identifiant de la salle (numéro automatique dans la BDD)
+private $room_name;		// nom de la salle
+private $capacity;		// capacité de la salle
+private $aera_name;		// nom
+
+}
 
 
 
