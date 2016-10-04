@@ -314,7 +314,7 @@ class DAO
 		$txt_req = "Select count(mrbs_entry_digicode.id)";
 		$txt_req = $txt_req . " from mrbs_entry, mrbs_entry_digicode, mrbs_users";
 		$txt_req = $txt_req . " where mrbs_entry.id = mrbs_entry_digicode.id";
-		$txt_req = $txt_req . " where mrbs_entry.create_by = mrbs_users.name";
+		$txt_req = $txt_req . " and mrbs_entry.create_by = mrbs_users.name";
 		$txt_req = $txt_req . " and mrbs_users.name = :name";
 		
 		$req = $this->cnx->prepare($txt_req);
