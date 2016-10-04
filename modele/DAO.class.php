@@ -306,6 +306,17 @@ class DAO
 			return "1";
 	}
 	
+	public function aPasseDesReservations($name)
+	{
+		// préparation de la requete de recherche
+		$txt_req = "Select count(mrbs_entry_digicode.id)";
+		$txt_req = $txt_req . " from mrbs_entry, mrbs_entry_digicode, mrbs_users";
+		$txt_req = $txt_req . " where mrbs_entry.id = mrbs_entry_digicode.id";
+		$txt_req = $txt_req . " and mrbs_users.name = $name";
+		$txt_req = $txt_req . " and digicode = :digicodeSaisi";
+	}
+	// Partie de Chefdor, veuillez travailler en dessous.
+	
 } // fin de la classe DAO
 
 // ATTENTION : on ne met pas de balise de fin de script pour ne pas prendre le risque
