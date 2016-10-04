@@ -3,7 +3,7 @@
 //                                                 DAO : Data Access Object
 //                   Cette classe fournit des méthodes d'accès à la bdd mrbs (projet Réservations M2L)
 //                                                 Elle utilise l'objet PDO
-//                       Auteur : JM Cartron                       Dernière modification : 1/9/2016
+//                       Auteur : JM Cartron                       Dernière modification : 04/10/2016
 // -------------------------------------------------------------------------------------------------------------------------
 
 // liste des méthodes de cette classe (dans l'ordre alphabétique) :
