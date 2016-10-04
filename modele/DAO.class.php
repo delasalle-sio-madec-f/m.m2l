@@ -306,15 +306,34 @@ class DAO
 			return "1";
 	}
 	
+	// aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
+	// modifié par Chefdor le 04/10/2016
 	public function aPasseDesReservations($name)
 	{
 		// préparation de la requete de recherche
 		$txt_req = "Select count(mrbs_entry_digicode.id)";
 		$txt_req = $txt_req . " from mrbs_entry, mrbs_entry_digicode, mrbs_users";
 		$txt_req = $txt_req . " where mrbs_entry.id = mrbs_entry_digicode.id";
-		$txt_req = $txt_req . " and mrbs_users.name = $name";
+		$txt_req = $txt_req . " where mrbs_entry.create_by = mrbs_users.name";
+		$txt_req = $txt_req . " and mrbs_users.name = :name";
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et du paramètre
+		$req->bindValue("name", $name, PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		$reservation = $req->fetchColumn(0);
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+		
+		if ($reservation != null){
+			return "Vous avez passé une ou plusieurs réservations";
+		}
+		else {
+			return "Vous n'avez pas de réservation enregistrée";
+		}
 	}
-	// Partie de Chefdor, veuillez travailler en dessous.
 	
 } // fin de la classe DAO
 
