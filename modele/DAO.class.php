@@ -161,9 +161,12 @@ class DAO
 		return $ok;
 	}
 	
-	//  envoyerMdp : envoie un mail à l'utilisateur avec son nouveau mot de passe
+	// envoyerMdp : envoie un mail à l'utilisateur avec son nouveau mot de passe
 	// crée par Florian MADEC le 11/10/2016
-	
+	public function envoyerMdp($nom, $nouveaumdp)
+	{
+		
+	}
 
 	// fournit true si l'utilisateur ($nomUser) existe, false sinon
 	// modifié par Jim le 5/5/2015
