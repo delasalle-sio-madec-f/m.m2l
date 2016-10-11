@@ -162,7 +162,7 @@ class DAO
 	}
 	
 	//  envoyerMdp : envoie un mail à l'utilisateur avec son nouveau mot de passe
-	// crée par Florian MADEC le 11/10/20166666666666666666666
+	// crée par Florian MADEC le 11/10/2016
 	
 
 	// fournit true si l'utilisateur ($nomUser) existe, false sinon
@@ -313,21 +313,27 @@ class DAO
 	
 	// confirmerReservation          : enregistre la confirmation de réservation dans la bdd
 	// modifié par Chefdor le 11/10/2016
-	public function confirmerReservation ($id)
+	public function confirmerReservation ($idReservation)
 	{
 		// préparation de la requete de modification
 		$txt_req = "UPDATE mrbs_entry";
-		$txt_req = $txt_req . "SET status = ";
+		$txt_req = $txt_req . "SET status = 1";
+		$txt_req = $txt_req . "WHERE id = :id";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et du paramètre
-		$req->bindValue("name", $name, PDO::PARAM_STR);
+		$req->bindValue("id", $idReservation, PDO::PARAM_STR);
 		
-		// exécution de la requete
-		$req->execute();
-		$reservation = $req->fetchColumn(0);
-		// libère les ressources du jeu de données
-		$req->closeCursor();
+		try {
+			// exécution de la requete
+			$req->execute();
+			
+			return "La réservation n°".$idReservation." à bien été confirmé";
+		}
+		catch (Exception $e) {
+			return "La réservation n'a pas pu être confirmé";
+		}
+		
 	}
 	
 	// aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
