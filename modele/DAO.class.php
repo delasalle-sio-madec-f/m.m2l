@@ -343,9 +343,11 @@ class DAO
 		else {
 			return "Vous n'avez pas de réservation enregistrée";
 		}
+	}
 	
 	// annulerReservation 			: supprime une réservation de la base de données
 	//crée par Leveque le 11/10/2016
+	
 	public function annulerReservation($idReservation)
 	{
 		// préparation de la requete de supression
@@ -357,11 +359,11 @@ class DAO
 		
 		// exécution de la requete
 		$req->execute();
-		$supReservation = $req->fetchColumn(0);
+		$supReservation = $req->;
 		// libère les ressources du jeu de données
 		$req->closeCursor();
 		
-		if ($supReservation){
+		if (isset($supReservation)){
 			return "La réservation a bien été supprimée";
 		}
 		else{
