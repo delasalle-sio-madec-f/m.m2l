@@ -312,8 +312,18 @@ class DAO
 	public function confirmerReservation ($id)
 	{
 		// préparation de la requete de modification
-		$txt_req = "UPDATE status";
-		$txt_req = $txt_req . " FROM mrbs_entry";
+		$txt_req = "UPDATE mrbs_entry";
+		$txt_req = $txt_req . "SET status = ";
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et du paramètre
+		$req->bindValue("name", $name, PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		$reservation = $req->fetchColumn(0);
+		// libère les ressources du jeu de données
+		$req->closeCursor();
 	}
 	
 	// aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
@@ -343,6 +353,7 @@ class DAO
 		else {
 			return "Vous n'avez pas de réservation enregistrée";
 		}
+	}
 	
 	// annulerReservation 			: supprime une réservation de la base de données
 	//crée par Leveque le 11/10/2016
