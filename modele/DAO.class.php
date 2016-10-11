@@ -373,7 +373,7 @@ class DAO
 		
 		// exécution de la requete
 		$req->execute();
-		$supReservation = $req->;
+		$supReservation = $req->fetch(PDO::FETCH_OBJ);
 		// libère les ressources du jeu de données
 		$req->closeCursor();
 		
