@@ -365,7 +365,7 @@ class DAO
 	public function annulerReservation($idReservation)
 	{
 		// préparation de la requete de supression
-		$txt_req = "DELETE * FROM mrbs_entry WHERE id = :idReservation";
+		$txt_req = "DELETE FROM mrbs_entry WHERE id = :idReservation";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et du paramètre
@@ -373,18 +373,37 @@ class DAO
 		
 		// exécution de la requete
 		$req->execute();
-		$supReservation = $req->fetch(PDO::FETCH_OBJ);
+		
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+	}
+	
+	public function getReservation($idReservation)
+	{
+		// préparation de la requete de recherche
+		$txt_req = "SELECT *";
+		$txt_req = $txt_req . " FROM mrbs_entry";
+		$txt_req = $txt_req . " WHERE id = :idReservation";
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et du paramètre
+		$req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		$reservation = $req->fetch(PDO::FETCH_OBJ);
 		// libère les ressources du jeu de données
 		$req->closeCursor();
 		
-		if (isset($supReservation)){
-			return "La réservation a bien été supprimée";
+		if (isset($reservation)){
+			return $reservation;
 		}
-		else{
-			return "La supression de la réservation a rencontrée un problème";
+		else 
+		{
+			return "";
 		}
+		
 	}
-	
 	
 	
 } // fin de la classe DAO
