@@ -161,11 +161,40 @@ class DAO
 		return $ok;
 	}
 	
+	// Enregistre le nouveau mot de passe de l'utilisateur dans la bdd après l'avoir hashé en MD5
+	// modifié par Florian Madec le 11/10/2016
+	public function modifierMdpUser($nomUser, $nouveauMdp)
+	{
+		$txt_req = "UPDATE mrbs_users SET password=:val1 WHERE name = :nomUser";
+		$req = $this->cnx->prepare($txt_req);
+		$req->bindValue("val1", md5($nouveauMdp),PDO::PARAM_STR);
+		$req->bindValue("nomUser", $nomUser,PDO::PARAM_STR);
+		// exécution de la requete
+		$ok = $req->execute();
+		return $ok;
+	}
+	
 	// envoyerMdp : envoie un mail à l'utilisateur avec son nouveau mot de passe
 	// crée par Florian MADEC le 11/10/2016
-	public function envoyerMdp($nom, $nouveaumdp)
+	public function envoyerMdp($nom, $nouveauMdp)
 	{
+		GLOBAL $ADR_MAIL_EMETTEUR;
 		
+		$txt_req = "Select email from mrbs_users where name = :nomUser";
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et de ses paramètres
+		$req->bindValue("nomUser", $nom, PDO::PARAM_STR);
+		
+		$req->execute();
+		$to = $req->fetchColumn(0);
+		$from = $ADR_MAIL_EMETTEUR;
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+	    $subject = 'Changement de mot de passe';
+	    $message = 'Bonjour, Voici votre nouveau mot de passe : ' . $nouveauMdp;
+	
+	    $ok = Outils::envoyerMail($to, $subject, $message, $from);
+		return $ok;
 	}
 
 	// fournit true si l'utilisateur ($nomUser) existe, false sinon
