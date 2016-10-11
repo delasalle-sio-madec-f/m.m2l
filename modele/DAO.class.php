@@ -333,6 +333,30 @@ class DAO
 		else {
 			return "Vous n'avez pas de réservation enregistrée";
 		}
+	
+	// annulerReservation 			: supprime une réservation de la base de données
+	//crée par Leveque le 11/10/2016
+	public function annulerReservation($idReservation)
+	{
+		// préparation de la requete de supression
+		$txt_req = "DELETE * FROM mrbs_entry WHERE id = :idReservation";
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et du paramètre
+		$req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		$supReservation = $req->fetchColumn(0);
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+		
+		if ($supReservation){
+			return "La réservation a bien été supprimée";
+		}
+		else{
+			return "La supression de la réservation a rencontrée un problème";
+		}
 	}
 	
 } // fin de la classe DAO
