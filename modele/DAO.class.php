@@ -344,7 +344,7 @@ class DAO
 	public function aPasseDesReservations($name)
 	{
 		// préparation de la requete de recherche
-		$txt_req = "SELECT count(mrbs_entry_digicode.id)";
+		$txt_req = "SELECT count(mrbs_entry_digicode.id) AS nbReservation";
 		$txt_req = $txt_req . " FROM mrbs_entry, mrbs_entry_digicode, mrbs_users";
 		$txt_req = $txt_req . " WHERE mrbs_entry.id = mrbs_entry_digicode.id";
 		$txt_req = $txt_req . " AND mrbs_entry.create_by = mrbs_users.name";
@@ -357,15 +357,16 @@ class DAO
 		// exécution de la requete
 		$req->execute();
 		$reservation = $req->fetchColumn(0);
-		// libère les ressources du jeu de données
-		$req->closeCursor();
+		
 		
 		if ($reservation != null){
-			return "Vous avez passé une ou plusieurs réservations";
+			return $reservation;
 		}
 		else {
-			return "Vous n'avez pas de réservation enregistrée";
+			return "0";
 		}
+		// libère les ressources du jeu de données
+		$req->closeCursor();
 	}
 	
 	// annulerReservation 			: supprime une réservation de la base de données
