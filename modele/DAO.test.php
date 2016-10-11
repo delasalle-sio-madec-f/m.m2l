@@ -20,23 +20,24 @@ include_once ('DAO.class.php');
 $dao = new DAO();
 
 
-/*
+
 // test de la méthode annulerReservation --------------------------------------------------------
 // pour ce test, utiliser une réservation existante
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de annulerReservation : </h3>";
-$laReservation = $dao->getReservation("1");
-if ($laReservation) {
-	$dao->annulerReservation("1");
-	$laReservation = $dao->getReservation("1");
-	if ($laReservation)
-		echo "La réservation 1 n'a pas été supprimée !</p>";
+$laReservation = $dao->getReservation("11");
+if (!empty($laReservation)) {
+	$dao->annulerReservation("11");
+	$laReservation = $dao->getReservation("11");
+	if (!empty($laReservation))
+		echo "La réservation 11 n'a pas été supprimée !</p>";
 	else
-		echo "La réservation 1 a bien été supprimée !</p>";
+		echo "La réservation 11 a bien été supprimée !</p>";
+
 }
 else
-	echo "<p>La réservation 1 n'existe pas !</p>";
-*/
+	echo "<p>La réservation 11 n'existe pas !</p>";
+
 
 
 
@@ -196,21 +197,24 @@ $niveauUtilisateur = $dao->getNiveauUtilisateur('guesdonm', 'passe');
 echo "NiveauUtilisateur de ('guesdonm', 'passe') : <b>" . $niveauUtilisateur . "</b></p>";
 
 
-/*
+
 // test de la méthode getReservation --------------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de getReservation : </h3>";
 $laReservation = $dao->getReservation("11");
-if ($laReservation) 
-	echo "<p>La réservation 11 existe : <br>" . $laReservation->toString() . "</p>";
+
+if (!empty($laReservation)) 
+	echo "<p>La réservation 11 existe : <br>" .$laReservation->name."</p>";
 else
 	echo "<p>La réservation 11 n'existe pas !</p>";	
 $laReservation = $dao->getReservation("12");
-if ($laReservation) 
-	echo "<p>La réservation 12 existe : <br>" . $laReservation->toString() . "</p>";
+if (!empty($laReservation)) 
+	echo "<p>La réservation 12 existe : <br>" .$laReservation->name."</p>";
 else
 	echo "<p>La réservation 12 n'existe pas !</p>";	
-*/
+
+
+
 
 
 /*
