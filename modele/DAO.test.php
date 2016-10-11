@@ -25,18 +25,18 @@ $dao = new DAO();
 // pour ce test, utiliser une réservation existante
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de annulerReservation : </h3>";
-$laReservation = $dao->getReservation("11");
+$laReservation = $dao->getReservation("10");
 if (!empty($laReservation)) {
-	$dao->annulerReservation("11");
-	$laReservation = $dao->getReservation("11");
+	$dao->annulerReservation("10");
+	$laReservation = $dao->getReservation("10");
 	if (!empty($laReservation))
-		echo "La réservation 11 n'a pas été supprimée !</p>";
+		echo "La réservation 10 n'a pas été supprimée !</p>";
 	else
-		echo "La réservation 11 a bien été supprimée !</p>";
+		echo "La réservation 10 a bien été supprimée !</p>";
 
 }
 else
-	echo "<p>La réservation 11 n'existe pas !</p>";
+	echo "<p>La réservation 10 n'existe pas !</p>";
 
 
 
@@ -110,15 +110,16 @@ else
 
 
 
-/*
+
 // test de la méthode estLeCreateur ---------------------------------------------------------------
-// modifié par Jim le 25/9/2015
+// modifié par Melvin le 11/10/2016
 echo "<h3>Test de estLeCreateur : </h3>";
-if ($dao->estLeCreateur("admin", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+
+if ($dao->estLeCreateur("admin", "11") == true) $estLeCreateur = "oui"; else $estLeCreateur = "non";
 echo "<p>'admin' a créé la réservation 11 : <b>" . $estLeCreateur . "</b><br>";
-if ($dao->estLeCreateur("zenelsy", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+if ($dao->estLeCreateur("zenelsy", "11") == true) $estLeCreateur = "oui"; else $estLeCreateur = "non";
 echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>";
-*/
+
 
 
 /*
