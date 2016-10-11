@@ -160,6 +160,10 @@ class DAO
 		$ok = $req->execute();
 		return $ok;
 	}
+	
+	//  envoyerMdp : envoie un mail à l'utilisateur avec son nouveau mot de passe
+	// crée par Florian MADEC le 11/10/20166666666666666666666
+	
 
 	// fournit true si l'utilisateur ($nomUser) existe, false sinon
 	// modifié par Jim le 5/5/2015
@@ -379,6 +383,7 @@ class DAO
 			return "La supression de la réservation a rencontrée un problème";
 		}
 	}
+	
 	
 	
 } // fin de la classe DAO
