@@ -160,6 +160,10 @@ class DAO
 		$ok = $req->execute();
 		return $ok;
 	}
+	
+	//  envoyerMdp : envoie un mail à l'utilisateur avec son nouveau mot de passe
+	// crée par Florian MADEC le 11/10/20166666666666666666666
+	
 
 	// fournit true si l'utilisateur ($nomUser) existe, false sinon
 	// modifié par Jim le 5/5/2015
@@ -312,8 +316,18 @@ class DAO
 	public function confirmerReservation ($id)
 	{
 		// préparation de la requete de modification
-		$txt_req = "UPDATE status";
-		$txt_req = $txt_req . " FROM mrbs_entry";
+		$txt_req = "UPDATE mrbs_entry";
+		$txt_req = $txt_req . "SET status = ";
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et du paramètre
+		$req->bindValue("name", $name, PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		$reservation = $req->fetchColumn(0);
+		// libère les ressources du jeu de données
+		$req->closeCursor();
 	}
 	
 	// aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
@@ -370,6 +384,7 @@ class DAO
 			return "La supression de la réservation a rencontrée un problème";
 		}
 	}
+	
 	
 	
 } // fin de la classe DAO
