@@ -378,18 +378,18 @@ class DAO
 		
 		// exécution de la requete
 		$req->execute();
-		$digicode = $req->fetchColumn(0);
+		$nbReponses = $req->fetchColumn(0);
 		
 		// libère les ressources du jeu de données
 		$req->closeCursor();
 		
-		if ($digicode == 0)
+		if ($nbReponses == 0)
 		{
-			return false;
+			return "0";
 		}
 		else
 		{
-			return true;
+			return "1";
 		}
 	}
 	

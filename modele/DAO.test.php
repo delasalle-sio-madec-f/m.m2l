@@ -274,6 +274,8 @@ else
 echo "<h3>Test de testerDigicodeBatiment : </h3>";
 $reponse = $dao->testerDigicodeBatiment("34214E");
 echo "<p>L'appel de testerDigicodeBatiment('34214E') donne : <b>" . $reponse . "</b><br>";
+$reponse = $dao->testerDigicodeBatiment("B3CF69");
+echo "<p>L'appel de testerDigicodeBatiment('B3CF69') donne : <b>" . $reponse . "</b><br>";
 
 
 
