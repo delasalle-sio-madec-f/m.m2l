@@ -393,7 +393,6 @@ class DAO
 	
 	// annulerReservation 			: supprime une réservation de la base de données
 	//crée par Leveque le 11/10/2016
-	
 	public function annulerReservation($idReservation)
 	{
 		// préparation de la requete de supression
@@ -476,7 +475,7 @@ class DAO
 	}
 	
 	// Fournit la liste des salles disponibles à la réservation
-	// modifié par Simon le 11/10/2016
+	// modifié par Melvin le 18/10/2016
 	public function getLesSalles()
 	{
 		// préparation de la requete de recherche
