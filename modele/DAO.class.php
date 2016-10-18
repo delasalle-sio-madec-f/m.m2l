@@ -366,11 +366,9 @@ class DAO
 	public function aPasseDesReservations($name)
 	{
 		// préparation de la requete de recherche
-		$txt_req = "SELECT count(mrbs_entry_digicode.id) AS nbReservation";
-		$txt_req = $txt_req . " FROM mrbs_entry, mrbs_entry_digicode, mrbs_users";
-		$txt_req = $txt_req . " WHERE mrbs_entry.id = mrbs_entry_digicode.id";
-		$txt_req = $txt_req . " AND mrbs_entry.create_by = mrbs_users.name";
-		$txt_req = $txt_req . " AND mrbs_users.name = :name";
+		$txt_req = "SELECT count(*) AS nbReservation";
+		$txt_req = $txt_req . " FROM mrbs_entry";
+		$txt_req = $txt_req . " WHERE create_by = :name";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et du paramètre
@@ -381,11 +379,11 @@ class DAO
 		$reservation = $req->fetchColumn(0);
 		
 		
-		if ($reservation != null){
-			return $reservation;
+		if ($reservation == 0){
+			return false;
 		}
 		else {
-			return "0";
+			return true;
 		}
 		// libère les ressources du jeu de données
 		$req->closeCursor();
