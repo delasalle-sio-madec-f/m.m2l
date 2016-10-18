@@ -496,6 +496,8 @@ class DAO
 		$req->closeCursor();
 	}
 	
+	// getReservation	: fournit un objet Reservation à partir de son identifiant $idReservation
+	//crée par Leveque le 18/10/2016
 	public function getReservation($idReservation)
 	{
 		// préparation de la requete de recherche
@@ -503,7 +505,7 @@ class DAO
 		$txt_req = $txt_req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
 		$txt_req = $txt_req . " where mrbs_entry.room_id = mrbs_room.id";
 		$txt_req = $txt_req . " and mrbs_entry.id = mrbs_entry_digicode.id";
-		$txt_req = $txt_req . " and mrbs_entry.id = :idReservation";
+		$txt_req = $txt_req . " and mrbs_entry.id = 11";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et du paramètre
@@ -532,6 +534,8 @@ class DAO
 		$req->closeCursor();
 		
 		return $uneReservation;
+		
+		return var_dump($uneLigne);
 	}
 	
 	public function estLeCreateur($nomUser, $idReservation)
