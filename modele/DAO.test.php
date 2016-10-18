@@ -203,15 +203,16 @@ echo "NiveauUtilisateur de ('guesdonm', 'passe') : <b>" . $niveauUtilisateur . "
 // test de la méthode getReservation --------------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de getReservation : </h3>";
-$laReservation = $dao->getReservation("11");
 
+$laReservation = $dao->getReservation("11");
 if (!empty($laReservation)) 
-	echo "<p>La réservation 11 existe : <br>" .$laReservation->name."</p>";
+	echo "<p>La réservation 11 existe : <br>" .$laReservation->room_name."</p>";
 else
 	echo "<p>La réservation 11 n'existe pas !</p>";	
+
 $laReservation = $dao->getReservation("12");
 if (!empty($laReservation)) 
-	echo "<p>La réservation 12 existe : <br>" .$laReservation->name."</p>";
+	echo "<p>La réservation 12 existe : <br>" .$laReservation->room_name."</p>";
 else
 	echo "<p>La réservation 12 n'existe pas !</p>";	
 

@@ -497,7 +497,7 @@ class DAO
 	}
 	
 	// getReservation	: fournit un objet Reservation à partir de son identifiant $idReservation
-	//crée par Leveque le 18/10/2016
+	// crée par Leveque le 18/10/2016
 	public function getReservation($idReservation)
 	{
 		// préparation de la requete de recherche
@@ -528,14 +528,12 @@ class DAO
 		}
 		else 
 		{			
-			$uneReservation = null;
+			$uneReservation = "";
 		}
 		// libère les ressources du jeu de données
 		$req->closeCursor();
 		
 		return $uneReservation;
-		
-		return var_dump($uneLigne);
 	}
 	
 	public function estLeCreateur($nomUser, $idReservation)
