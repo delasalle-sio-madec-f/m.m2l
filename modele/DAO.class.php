@@ -349,7 +349,7 @@ class DAO
 	{
 		// préparation de la requete de modification
 		$txt_req = "UPDATE mrbs_entry";
-		$txt_req = $txt_req . "SET status = 1";
+		$txt_req = $txt_req . "SET status = 0";
 		$txt_req = $txt_req . "WHERE id = :id";
 		
 		$req = $this->cnx->prepare($txt_req);
@@ -360,10 +360,10 @@ class DAO
 			// exécution de la requete
 			$req->execute();
 			
-			return "La réservation n°".$idReservation." à bien été confirmé";
+			return true;
 		}
 		catch (Exception $e) {
-			return "La réservation n'a pas pu être confirmé";
+			return false;
 		}
 		
 	}
