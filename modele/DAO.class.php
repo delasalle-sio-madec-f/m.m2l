@@ -471,6 +471,24 @@ class DAO
 		}
 	}
 	
+	public function getLesSalles()
+	{
+		// préparation de la requete de recherche
+		$txt_req = "SELECT *";
+		$txt_req = $txt_req . " FROM mrbs_room";
+	
+		$req = $this->cnx->prepare($txt_req);
+	
+		// exécution de la requete
+		$req->execute();
+		$resultat = $req->fetch(PDO::FETCH_OBJ);
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+		
+		return $resultat;
+
+	}
+	
 } // fin de la classe DAO
 
 // ATTENTION : on ne met pas de balise de fin de script pour ne pas prendre le risque
