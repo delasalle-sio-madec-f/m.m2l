@@ -444,33 +444,31 @@ class DAO
 		
 	}
 	
-	public function estLeCreateur($idReservation, $nomUser)
+	public function estLeCreateur($nomUser, $idReservation)
 	{
 		// préparation de la requete de recherche
 		$txt_req = "SELECT *";
 		$txt_req = $txt_req . " FROM mrbs_entry";
-		$txt_req = $txt_req . " WHERE id = :idReservation";
+		$txt_req = $txt_req . " WHERE id = :id";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et du paramètre
-		$req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+		$req->bindValue("id", $idReservation, PDO::PARAM_STR);
 		
 		// exécution de la requete
 		$req->execute();
-		$reservation = $req->fetchColumn(0);
+		$resultat = $req->fetch(PDO::FETCH_OBJ);
 		// libère les ressources du jeu de données
 		$req->closeCursor();
+		$nomCreateur = $resultat->create_by;
 		
-/*		if($nomCreateur == $nomUser){
+		if($nomCreateur == $nomUser){
 			return true;
 		}
 		else
 		{
-			return var_dump($reservation);
-		}*/
-		
-		return var_dump($reservation);
-	
+			return false;
+		}
 	}
 	
 } // fin de la classe DAO
