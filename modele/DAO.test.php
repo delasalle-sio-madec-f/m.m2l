@@ -45,11 +45,11 @@ else
 // pour ce test, choisir un utilisateur avec des réservations et un autre sans réservation
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de aPasseDesReservations : </h3>";
-$ok = $dao->aPasseDesReservations("zenelsy");
+$ok = $dao->aPasseDesReservations("TestEstLeCreateur");
 if ($ok)
-	echo "<p>zenelsy a bien passé des réservations !<br>";
+	echo "<p>TestEstLeCreateur a bien passé des réservations !<br>";
 else
-	echo "<p>zenelsy n'a pas passé de réservations !<br>";
+	echo "<p>TestEstLeCreateur n'a pas passé de réservations !<br>";
 $ok = $dao->aPasseDesReservations("jim");
 if ($ok)
 	echo "jim a bien passé des réservations !</p>";
@@ -99,7 +99,7 @@ else
 
 // test de la méthode envoyerMdp ------------------------------------------------------------------
 // modifié par Jim le 28/9/2015
-
+/*
 echo "<h3>Test de envoyerMdp : </h3>";
 $dao->modifierMdpUser("madecf", "passe");
 $ok = $dao->envoyerMdp("madecf", "passe");
@@ -108,7 +108,7 @@ if ($ok)
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
 
-
+/*
 
 
 // test de la méthode estLeCreateur ---------------------------------------------------------------
@@ -122,7 +122,7 @@ echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>"
 
 
 
-/*
+
 // test de la méthode existeReservation -----------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de existeReservation : </h3>";
@@ -130,7 +130,7 @@ if ($dao->existeReservation("11")) $existe = "oui"; else $existe = "non";
 echo "<p>Existence de la réservation 11 : <b>" . $existe . "</b><br>";
 if ($dao->existeReservation("12")) $existe = "oui"; else $existe = "non";
 echo "Existence de la réservation 12 : <b>" . $existe . "</b></p>";
-*/
+
 
 
 // test de la méthode existeUtilisateur -----------------------------------------------------------
