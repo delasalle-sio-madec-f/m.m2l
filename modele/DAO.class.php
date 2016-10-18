@@ -349,22 +349,15 @@ class DAO
 	{
 		// préparation de la requete de modification
 		$txt_req = "UPDATE mrbs_entry";
-		$txt_req = $txt_req . "SET status = 0";
-		$txt_req = $txt_req . "WHERE id = :id";
+		$txt_req = $txt_req . " SET status = 0";
+		$txt_req = $txt_req . " WHERE id = :id";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et du paramètre
 		$req->bindValue("id", $idReservation, PDO::PARAM_STR);
 		
-		try {
-			// exécution de la requete
-			$req->execute();
-			
-			return true;
-		}
-		catch (Exception $e) {
-			return false;
-		}
+		$ok = $req->execute();
+		return $ok;
 		
 	}
 	
@@ -420,28 +413,39 @@ class DAO
 	public function getReservation($idReservation)
 	{
 		// préparation de la requete de recherche
-		$txt_req = "SELECT *";
-		$txt_req = $txt_req . " FROM mrbs_entry";
-		$txt_req = $txt_req . " WHERE id = :idReservation";
+		$txt_req = "Select mrbs_entry.id as id_entry, timestamp, start_time, end_time, room_name, status, digicode";
+		$txt_req = $txt_req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
+		$txt_req = $txt_req . " where mrbs_entry.room_id = mrbs_room.id";
+		$txt_req = $txt_req . " and mrbs_entry.id = mrbs_entry_digicode.id";
+		$txt_req = $txt_req . " and mrbs_entry.id = :idReservation";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et du paramètre
-		$req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+		$req->bindValue("idReservation", $idReservation, PDO::PARAM_INT);
 		
 		// exécution de la requete
 		$req->execute();
-		$reservation = $req->fetch(PDO::FETCH_OBJ);
+		$uneLigne = $req->fetch(PDO::FETCH_OBJ);
+		
+		if ($uneLigne)
+		{	$unId = utf8_encode($uneLigne->id_entry);
+			$unTimeStamp = utf8_encode($uneLigne->timestamp);
+			$unStartTime = utf8_encode($uneLigne->start_time);
+			$unEndTime = utf8_encode($uneLigne->end_time);
+			$unRoomName = utf8_encode($uneLigne->room_name);
+			$unStatus = utf8_encode($uneLigne->status);
+			$unDigicode = utf8_encode($uneLigne->digicode);
+			
+			$uneReservation = new Reservation($unId, $unTimeStamp, $unStartTime, $unEndTime, $unRoomName, $unStatus, $unDigicode);
+		}
+		else 
+		{			
+			$uneReservation = null;
+		}
 		// libère les ressources du jeu de données
 		$req->closeCursor();
 		
-		if (isset($reservation)){
-			return $reservation;
-		}
-		else 
-		{
-			return "";
-		}
-		
+		return $uneReservation;
 	}
 	
 	public function estLeCreateur($nomUser, $idReservation)
