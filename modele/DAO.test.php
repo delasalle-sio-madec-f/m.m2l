@@ -180,7 +180,7 @@ echo "<h3>Test de getLesSalles : </h3>";
 $lesSalles = $dao->getLesSalles();
 $nbReponses = sizeof($lesSalles);
 echo "<p>Nombre de salles : " . $nbReponses . "</p>";
-// affichage des salles
+// affichage des salles 
 foreach ($lesSalles as $uneSalle)
 {	echo ($uneSalle->getRoom_name());
 	echo ('<br>');

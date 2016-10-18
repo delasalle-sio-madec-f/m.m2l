@@ -471,22 +471,38 @@ class DAO
 		}
 	}
 	
+	// Fournit la liste des salles disponibles à la réservation
+	// modifié par Simon le 11/10/2016
 	public function getLesSalles()
 	{
 		// préparation de la requete de recherche
-		$txt_req = "SELECT *";
-		$txt_req = $txt_req . " FROM mrbs_room";
-	
+		$txt_req = "select mrbs_room.id, room_name, area_name, capacity from mrbs_room, mrbs_area where mrbs_area.id = mrbs_room.area_id";
+		
 		$req = $this->cnx->prepare($txt_req);
-	
-		// exécution de la requete
+		// extraction des données
 		$req->execute();
-		$resultat = $req->fetch(PDO::FETCH_OBJ);
+		$uneLigne = $req->fetch(PDO::FETCH_OBJ);
+		
+		// construction d'une collection d'objets Reservation
+		$lesSalles = array();
+		// tant qu'une ligne est trouvée :
+		while ($uneLigne)
+		{	// création d'un objet Reservation
+			$unId = utf8_encode($uneLigne->id);
+			$unNom = utf8_encode($uneLigne->room_name);
+			$uneZone = utf8_encode($uneLigne->area_name);
+			$uneCapacite = utf8_encode($uneLigne->capacity);
+				
+			$uneSalle = new Salle($unId, $unNom, $uneZone, $uneCapacite);
+			// ajout de la réservation à la collection
+			$lesSalles[] = $uneSalle;
+			// extrait la ligne suivante
+			$uneLigne = $req->fetch(PDO::FETCH_OBJ);
+		}
 		// libère les ressources du jeu de données
 		$req->closeCursor();
-		
-		return $resultat;
-
+		// fourniture de la collection
+		return $lesSalles;
 	}
 	
 } // fin de la classe DAO
