@@ -342,9 +342,74 @@ class DAO
 			return "1";
 	}
 	
+	// testerDigicodeBatiment        : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation de salle quelconque
+	// modifié par Chefdor le 18/10/2016
+	public function testerDigicodeBatiment ($digicodeSaisi)
+	{
+		$txt_req = "SELECT count(*)";
+		$txt_req = $txt_req . " FROM mrbs_entry_digicode";
+		$txt_req = $txt_req . " WHERE digicode = :digicodeSaisi";
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et du paramètre
+		$req->bindValue("digicodeSaisi", $digicodeSaisi, PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		$digicode = $req->fetchColumn(0);
+		
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+		
+		if ($digicode == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	// getUtilisateur                : fournit un objet Utilisateur à partir de son nom $nomUser
+	// modifié par Chefdor le 18/10/2016
+	public function getUtilisateur ($nomUser)
+	{
+		// préparation de la requete de recherche
+		$txt_req = "SELECT id, level, name, password, email";
+		$txt_req = $txt_req . " FROM mrbs_users";
+		$txt_req = $txt_req . " WHERE name = :nomUser";
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et du paramètre
+		$req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		$uneLigne = $req->fetch(PDO::FETCH_OBJ);
+		
+		if ($uneLigne)
+		{	
+			$unId = utf8_encode($uneLigne->id);
+			$unLevel = utf8_encode($uneLigne->level);
+			$unName = utf8_encode($uneLigne->name);
+			$unPassword = utf8_encode($uneLigne->password);
+			$unEMail = utf8_encode($uneLigne->email);
+			
+			$unUtilisateur = new Utilisateur($unId, $unLevel, $unName, $unPassword, $unEMail);
+		}
+		else
+		{
+			$unUtilisateur = null;
+		}
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+		
+		return $unUtilisateur;
+	}
 	
 	// confirmerReservation          : enregistre la confirmation de réservation dans la bdd
-	// modifié par Chefdor le 11/10/2016
+	// modifié par Chefdor le 18/10/2016
 	public function confirmerReservation ($idReservation)
 	{
 		// préparation de la requete de modification
@@ -362,7 +427,7 @@ class DAO
 	}
 	
 	// aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
-	// modifié par Chefdor le 04/10/2016
+	// modifié par Chefdor le 18/10/2016
 	public function aPasseDesReservations($name)
 	{
 		// préparation de la requete de recherche
@@ -379,10 +444,12 @@ class DAO
 		$reservation = $req->fetchColumn(0);
 		
 		
-		if ($reservation == 0){
+		if ($reservation == 0)
+		{
 			return false;
 		}
-		else {
+		else
+		{
 			return true;
 		}
 		// libère les ressources du jeu de données
