@@ -108,7 +108,7 @@ if ($ok)
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
 
-/*
+*/
 
 
 // test de la méthode estLeCreateur ---------------------------------------------------------------
