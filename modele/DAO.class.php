@@ -196,6 +196,28 @@ class DAO
 	    $ok = Outils::envoyerMail($to, $subject, $message, $from);
 		return $ok;
 	}
+	
+	//fournit true si la réservation ($idReservation) existe, false sinon
+	// modifié par Jim le 5/5/2015
+	public function existeReservation($idUtilisateur)
+	{	// préparation de la requete de recherche
+	$txt_req = "Select count(*) from mrbs_entry where id = :idResa";
+	$req = $this->cnx->prepare($txt_req);
+	// liaison de la requête et de ses paramètres
+	$req->bindValue("idResa", $idUtilisateur, PDO::PARAM_STR);
+	// exécution de la requete
+	$req->execute();
+	$nbReponses = $req->fetchColumn(0);
+	// libère les ressources du jeu de données
+	$req->closeCursor();
+	
+	// fourniture de la réponse
+	if ($nbReponses == 0)
+		return false;
+		else
+			return true;
+	}
+	
 
 	// fournit true si l'utilisateur ($nomUser) existe, false sinon
 	// modifié par Jim le 5/5/2015
