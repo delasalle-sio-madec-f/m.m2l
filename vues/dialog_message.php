@@ -7,7 +7,7 @@
 ?>
 
 		<div data-role="dialog" id="affichage_message" data-close-btn="none">
-			<div data-role="header" data-theme="<?php echo $themeFooter; ?>">
+			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
 				<?php if ($typeMessage == 'avertissement') { ?>
 					<h3>Avertissement...</h3>
 				<?php } ?>
@@ -27,7 +27,7 @@
 				</p>
 				<p style="text-align: center;"><?php echo $message; ?></p>
 			</div>
-			<div data-role="footer" class="ui-bar" data-theme="<?php echo $themeFooter; ?>">
+			<div data-role="footer" class="ui-bar" data-theme="<?php echo $themeNormal; ?>">
 				<a href="#page_principale" data-transition="<?php echo $transition; ?>">Fermer</a>
 			</div>
 		</div>
