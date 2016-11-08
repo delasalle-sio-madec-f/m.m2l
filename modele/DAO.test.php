@@ -212,11 +212,9 @@ echo "<h3>Test de getReservation : </h3>";
 
 $laReservation = $dao->getReservation("11");
 if (!empty($laReservation)) 
-<<<<<<< HEAD
+
 	echo "<p>La réservation 11 existe : <br>" .$laReservation->getRoom_name()."</p>";
-=======
-	echo "<p>La réservation 11 existe : <br>" .$laReservation->room_name."</p>";
->>>>>>> branch 'master' of https://github.com/delasalle-sio-madec-f/m.m2l.git
+
 else
 	echo "<p>La réservation 11 n'existe pas !</p>";	
 
