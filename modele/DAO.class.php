@@ -534,8 +534,6 @@ class DAO
 		$req->closeCursor();
 		
 		return $uneReservation;
-		
-		return var_dump($uneLigne);
 	}
 	
 	public function estLeCreateur($nomUser, $idReservation)
