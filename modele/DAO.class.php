@@ -46,6 +46,8 @@ class DAO
 	// ---------------------------------- Membres privés de la classe ---------------------------------------
 	// ------------------------------------------------------------------------------------------------------
 		
+	
+	
 	private $cnx;				// la connexion à la base de données
 	
 	// ------------------------------------------------------------------------------------------------------
@@ -378,18 +380,18 @@ class DAO
 		
 		// exécution de la requete
 		$req->execute();
-		$digicode = $req->fetchColumn(0);
+		$nbReponses = $req->fetchColumn(0);
 		
 		// libère les ressources du jeu de données
 		$req->closeCursor();
 		
-		if ($digicode == 0)
+		if ($nbReponses == 0)
 		{
-			return false;
+			return "0";
 		}
 		else
 		{
-			return true;
+			return "1";
 		}
 	}
 	
@@ -497,7 +499,7 @@ class DAO
 	}
 	
 	// getReservation	: fournit un objet Reservation à partir de son identifiant $idReservation
-	//crée par Leveque le 18/10/2016
+	// crée par Leveque le 18/10/2016
 	public function getReservation($idReservation)
 	{
 		// préparation de la requete de recherche
@@ -528,7 +530,7 @@ class DAO
 		}
 		else 
 		{			
-			$uneReservation = null;
+			$uneReservation = "";
 		}
 		// libère les ressources du jeu de données
 		$req->closeCursor();

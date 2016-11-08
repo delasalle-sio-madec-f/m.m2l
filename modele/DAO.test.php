@@ -35,6 +35,12 @@ if (!empty($laReservation)) {
 		echo "La réservation 10 a bien été supprimée !</p>";
 
 }
+
+
+
+
+
+
 else
 	echo "<p>La réservation 10 n'existe pas !</p>";
 
@@ -203,15 +209,24 @@ echo "NiveauUtilisateur de ('guesdonm', 'passe') : <b>" . $niveauUtilisateur . "
 // test de la méthode getReservation --------------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de getReservation : </h3>";
-$laReservation = $dao->getReservation("11");
 
+$laReservation = $dao->getReservation("11");
 if (!empty($laReservation)) 
+<<<<<<< HEAD
 	echo "<p>La réservation 11 existe : <br>" .$laReservation->getRoom_name()."</p>";
+=======
+	echo "<p>La réservation 11 existe : <br>" .$laReservation->room_name."</p>";
+>>>>>>> branch 'master' of https://github.com/delasalle-sio-madec-f/m.m2l.git
 else
 	echo "<p>La réservation 11 n'existe pas !</p>";	
+
 $laReservation = $dao->getReservation("12");
 if (!empty($laReservation)) 
+<<<<<<< HEAD
 	echo "<p>La réservation 12 existe : <br>" .$laReservation->getRoom_name()."</p>";
+=======
+	echo "<p>La réservation 12 existe : <br>" .$laReservation->room_name."</p>";
+>>>>>>> branch 'master' of https://github.com/delasalle-sio-madec-f/m.m2l.git
 else
 	echo "<p>La réservation 12 n'existe pas !</p>";	
 
@@ -274,6 +289,8 @@ else
 echo "<h3>Test de testerDigicodeBatiment : </h3>";
 $reponse = $dao->testerDigicodeBatiment("34214E");
 echo "<p>L'appel de testerDigicodeBatiment('34214E') donne : <b>" . $reponse . "</b><br>";
+$reponse = $dao->testerDigicodeBatiment("B3CF69");
+echo "<p>L'appel de testerDigicodeBatiment('B3CF69') donne : <b>" . $reponse . "</b><br>";
 
 
 
