@@ -587,7 +587,7 @@ class DAO
 			$uneZone = utf8_encode($uneLigne->area_name);
 			$uneCapacite = utf8_encode($uneLigne->capacity);
 				
-			$uneSalle = new Salle($unId, $unNom, $uneZone, $uneCapacite);
+			$uneSalle = new Salle($unId, $unNom, $uneCapacite , $uneZone);
 			// ajout de la réservation à la collection
 			$lesSalles[] = $uneSalle;
 			// extrait la ligne suivante
