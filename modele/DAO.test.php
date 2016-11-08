@@ -35,6 +35,12 @@ if (!empty($laReservation)) {
 		echo "La réservation 10 a bien été supprimée !</p>";
 
 }
+
+
+
+
+
+
 else
 	echo "<p>La réservation 10 n'existe pas !</p>";
 
