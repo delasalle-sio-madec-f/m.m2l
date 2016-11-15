@@ -1,10 +1,9 @@
 <?php
-// Projet Réservations M2L - version web mobile
-// fichier : vues/VueChangerDeMdp.php
-// Rôle : entrer les données de chagement de mot de passe
-// cette vue est appelée par le contôleur controleurs/CtrlChangerDeMdp.php
-// Création : 08/11/2016 par Melvin Leveque
-// Mise à jour : 08/11/2016 par Melvin Leveque
+	// Projet Réservations M2L - version web mobile
+	// fichier : vues/VueChangerDeMdp.php
+	// Rôle : visualiser la demande de changement de mdp 
+	// cette vue est appelée par le contôleur controleurs/CtrlChangerDeMdp.php
+	// Création : 04/10/2016 par Melvin Leveque
 ?>
 <!doctype html>
 <html>
@@ -12,16 +11,39 @@
 		<?php include_once ('vues/head.php'); ?>
 		
 		<script>
-			// associe une fonction à l'événement pageinit
-			$(document).bind('pageinit', function() {
-				<?php if ($typeMessage != '') { ?>
-					// affiche la boîte de dialogue 'affichage_message'
-					$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
-				<?php } ?>
-			} );
+		// version jQuery activée
+		
+		// associe une fonction à l'événement pageinit
+		$(document).bind('pageinit', function() {
+			// l'événement "click" de la case à cocher "caseAfficherMdp" est associé à la fonction "afficherMdp"
+			$('#caseAfficherMdp').click( afficherMdp );
+			
+			// selon l'état de la case, le type de la zone de saisie est "text" ou "password"
+			afficherMdp();
+			
+			// affichage du dernier mot de passe saisi (désactivé ici, car effectué dans le code HTML du formulaire)
+			// $('#txtMotDePasse').attr('value','<?php echo $mdp; ?>');
+			
+			<?php if ($typeMessage != '') { ?>
+				// affiche la boîte de dialogue 'affichage_message'
+				$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
+			<?php } ?>
+		} );
+		function afficherMdp() {
+			// tester si la case est cochée
+			if ( $("#caseAfficherMdp").is(":checked") ) {
+				// la zone passe en <input type="text">
+				$('#txtMotDePasse').attr('type', 'text');
+				$('#txtMotDePasseConf').attr('type', 'text');
+			}
+			else {
+				// la zone passe en <input type="password">
+				$('#txtMotDePasse').attr('type', 'password');
+				$('#txtMotDePasseConf').attr('type', 'password');
+			};
+		}
 		</script>
 	</head>
-	
 	<body>
 		<div data-role="page" id="page_principale">
 			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
@@ -30,22 +52,22 @@
 			</div>
 			
 			<div data-role="content">
-				<h4 style="text-align: center; margin-top: 0px; margin-bottom: 0px;">Changer de mot de passe</h4>
+				<h4 style="text-align: center; margin-top: 0px; margin-bottom: 0px;">Modifier mon mot de passe</h4>
 				<form action="index.php?action=ChangerDeMdp" method="post" data-ajax="false">
-					<div data-role="fieldcontain" class="ui-hide-label">
-						<label for="Mdp">Nouveau mot de passe* :</label>
-						<input type="password" name="NewMdp" id="NewMdp" required placeholder="Entrer votre nouveau mot de passe">
-					</div>
-					<div data-role="fieldcontain" class="ui-hide-label">
-						<label for="NewMdp">Confirmation* :</label>
-						<input type="password" name="ConfMdp" id="ConfMdp" required placeholder="Confirmer votre nouveau mot de passe">
-					</div>
-					<p>
-						<label for="caseAfficherMdp">Afficher en clair :</label>
-						<input type="checkbox" id="caseAfficherMdp" name="caseAfficherMdp"/>
-					</p>
 					<div data-role="fieldcontain">
-						<input type="submit" name="btnChangerDeMdp" id="btnChangerDeMdp" value="Changer mon mot de passe" data-mini="true">
+						<label for="txtMdp">Nouveau mot de passe :</label>
+						<input type="<?php if($afficherMdp == 'on') echo 'text'; else echo 'password'; ?>" name="txtMotDePasse" id="txtMotDePasse" required placeholder="Mon nouveau mot de passe" value="<?php echo $mdp; ?>">
+					</div>
+					<div data-role="fieldcontain">						
+						<label for="txtMdpConfirmation">Confirmation nouveau mot de passe :</label>
+						<input type="<?php if($afficherMdp == 'on') echo 'text'; else echo 'password'; ?>" name="txtMotDePasseConf" id="txtMotDePasseConf" required placeholder="Confirmation de mon nouveau mot de passe" value="<?php echo $mdpConf;?>">
+					</div>
+					<div data-role="fieldcontain" data-type="horizontal" class="ui-hide-label">
+						<label for="caseAfficherMdp">Afficher le mot de passe en clair</label>
+						<input type="checkbox" name="caseAfficherMdp" id="caseAfficherMdp" onclick="afficherMdp();" data-mini="true" <?php if ($afficherMdp == 'on') echo 'checked'; ?>  >
+					</div>
+					<div data-role="fieldcontain">
+						<input type="submit" name="btnChangerDeMdp" id="btnChangerDeMdp" value="Envoyer les données" data-mini="true">
 					</div>
 				</form>
 
