@@ -49,6 +49,7 @@ else {
 			}
 			else{
 				$dao->annulerReservation($numeroReservation);	
+				echo "La réservation n°$numeroReservation à bien été annulé";
 			}
 	
 			
