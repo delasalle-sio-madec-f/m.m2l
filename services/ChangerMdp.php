@@ -48,9 +48,29 @@ else {
 		include_once ('../modele/DAO.class.php');
 		$dao = new DAO();
 	
-		if ( $dao->getNiveauUtilisateur($nomAdmin, $mdpAdmin) != "" ) {
+		if ( $dao->getNiveauUtilisateur($nom, $ancienMdp) == "inconnu" ) {
 			$msg = "Erreur : authentification incorrecte.";
 		}
+		else {
+			$dao->modifierMdpUser($nom, $nouveauMdp);
+			
+			// envoi d'un mail de confirmation de l'enregistrement
+			$sujet = "Changement de votre mot de passe dans le système de réservation de M2L";
+			$contenuMail = "Votre nouveau mot de passe : " . $nouveauMdp;
+				
+			$ok = Outils::envoyerMail("delasalle.sio.chefdor.v@gmail.com", $sujet, $contenuMail, $ADR_MAIL_EMETTEUR);
+			if ( ! $ok ) {
+				// l'envoi de mail a échoué
+				$msg = "Enregistrement effectué ; vous allez recevoir un mail de confirmation.";
+			}
+			else {
+				// tout a bien fonctionné
+				$msg = "Enregistrement effectué ; l'envoi du mail de confirmation a rencontré un problème.";
+			}
+		}
+		// ferme la connexion à MySQL :
+		unset($dao);
+	}
 }
 
 // création du flux XML en sortie
@@ -58,6 +78,7 @@ creerFluxXML ($msg);
 
 // fin du programme (pour ne pas enchainer sur la fonction qui suit)
 exit;
+
 
 // création du flux XML en sortie
 function creerFluxXML($msg)
