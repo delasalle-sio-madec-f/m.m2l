@@ -22,8 +22,7 @@
 				<h4 style="text-align: center; margin-top: 0px; margin-bottom: 0px;">Annuler une réservation</h4>
 				<form action="index.php?action=AnnulerReservation" method="post" data-ajax="false">
 					<div data-role="fieldcontain" class="ui-hide-label">
-						<label for="txtAnnulerReservation">Réservation</label>
-						<input type="text" name="txtName" id="txtName" required placeholder="Entrez le numéro de réservation" value="<?php echo $name; ?>">
+						<input type="text" name="txtAnnulerReservation" id="txtAnnulerReservation" required placeholder="Entrez le numéro de réservation à annuler">
 					</div>
 					<div data-role="fieldcontain">
 						<input type="submit" name="btnAnnulerReservation" id="btnAnnulerReservation" value="Annuler la réservation" data-mini="true">
