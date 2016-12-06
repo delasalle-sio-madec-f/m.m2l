@@ -44,28 +44,42 @@ else {
 		$msg = "Erreur : le nouveau mot de passe et sa confirmation sont différents.";
 	}
 	else {
+		
 		// connexion du serveur web à la base MySQL ("include_once" peut être remplacé par "require_once")
 		include_once ('../modele/DAO.class.php');
 		$dao = new DAO();
-	
-		if ( $dao->getNiveauUtilisateur($nom, $ancienMdp) == "inconnu" ) {
-			$msg = "Erreur : authentification incorrecte.";
+		
+		$ok = $unUtilisateur = $dao->getUtilisateur($nom);
+		if ( ! $ok ) {
+			$msg = "Erreur : cet utilisateur est innexistant.";
 		}
 		else {
-			$dao->modifierMdpUser($nom, $nouveauMdp);
-			
-			// envoi d'un mail de confirmation de l'enregistrement
-			$sujet = "Changement de votre mot de passe dans le système de réservation de M2L";
-			$contenuMail = "Votre nouveau mot de passe : " . $nouveauMdp;
-				
-			$ok = Outils::envoyerMail("delasalle.sio.chefdor.v@gmail.com", $sujet, $contenuMail, $ADR_MAIL_EMETTEUR);
-			if ( ! $ok ) {
-				// l'envoi de mail a échoué
-				$msg = "Enregistrement effectué ; vous allez recevoir un mail de confirmation.";
+			$password = $unUtilisateur->getPassword();
+			// utilisation de la fonction md5($mdp) parce que l'ancien mot de passe est stockée en md5 dans la base de données
+			if ( md5($ancienMdp) != $password ) {
+				$msg = "Erreur : authentification incorrecte.";
 			}
-			else {
-				// tout a bien fonctionné
-				$msg = "Enregistrement effectué ; l'envoi du mail de confirmation a rencontré un problème.";
+			else{
+				// modification du mot de passe
+				$ok = $dao->modifierMdpUser($nom, $nouveauMdp);
+				if ( ! $ok ) {
+					$msg = "Erreur : problème lors de la modification du mot de passe.";
+				}
+				else {			
+					// envoi d'un mail de confirmation de l'enregistrement
+					$sujet = "Changement de votre mot de passe dans le système de réservation de M2L";
+					$contenuMail = "Votre nouveau mot de passe : " . $nouveauMdp;
+						
+					$ok = Outils::envoyerMail($unUtilisateur->getEmail(), $sujet, $contenuMail, $ADR_MAIL_EMETTEUR);
+					if ( ! $ok ) {
+						// l'envoi de mail a échoué
+						$msg = "Enregistrement effectué ; vous allez recevoir un mail de confirmation.";
+					}
+					else {
+						// tout a bien fonctionné
+						$msg = "Enregistrement effectué ; l'envoi du mail de confirmation a rencontré un problème.";
+					}
+				}
 			}
 		}
 		// ferme la connexion à MySQL :
