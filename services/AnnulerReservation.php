@@ -1,7 +1,7 @@
 <?php
 // Service web du projet Réservations M2L
-// Ecrit le 22/11/16 par Thibault Paquet
-// Modifié le 22/11/16 par Thibault Paquet
+// Ecrit le 22/11/16 par Chefdor
+// Modifié le 22/11/16 par Chefdor
 // Ce service web permet à un utilisateur de supprimer une réservation si il en est l'auteur
 // et fournit un flux XML contenant un compte-rendu d'exécution
 // Le service web doit recevoir 2 paramètres : nom, mdp, numeroReservation
